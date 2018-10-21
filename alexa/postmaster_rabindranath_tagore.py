@@ -80,11 +80,13 @@ def next_intent_handler(handler_input):
         speech = data[position] + "." + continue_message
         handler_input.attributes_manager.session_attributes['POSITION'] = \
             (position + 1)
+        end_session = False
     else:
         speech = data[position] + "." + goodbye_message
+        end_session = True
 
     handler_input.response_builder.speak(
-        speech).ask(help_text)
+        speech).set_should_end_session(end_session)
     return handler_input.response_builder.response
 
 
